@@ -1,0 +1,78 @@
+ul.octave{
+  display: inline-block;
+  padding: 0;
+  position:relative;
+}
+
+ul.octave li{
+  float: left;
+  list-style-type: none;
+  color: #cecece;
+  text-align: center;
+}
+ul.octave li.disabled{
+  background-color:  #cecece;
+}
+ul.octave li:hover:not(.disabled){
+  background: red;
+}
+ul.octave li > * {
+  vertical-align: bottom;
+}
+li.white{
+  width: 30px;
+  height: 150px;
+  border: solid 1px #cecece;
+  z-index:1;
+
+}
+li.black{
+  width: 22px;
+  height: 80px;
+  background: black;
+  z-index:2;
+  position:absolute;
+  border: solid 1px #cecece;
+}
+
+li.black.c{
+  left: 20px;
+}
+
+li.black.d{
+  left: 52px;
+}
+
+li.black.f{
+  left: 116px;
+}
+
+li.black.g{
+  left: 148px;
+}
+li.black.a{
+  left: 180px;
+}
+
+input[type=range][orient=vertical]
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 8px;
+    height: 175px;
+    padding: 0 5px;
+}
+.keyProbabilityContainer{
+  float: left;
+}
+.gradeProbability .gradeName{
+  color: #cecece;
+  font-size: 0.8em;
+}
+.gradeProbability .grade{
+  display: inline-block;
+  text-align: center;
+}
+.gradeProbability input[type=range]{
+  height: 100px;
+}
