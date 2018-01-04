@@ -58,6 +58,7 @@ export class App extends React.Component {
         <div className="scaleSelector">
           <KeyboardOctave
             octave='0'
+            selected={this.state.tone}
             onKeyPress={this.handleChangeScaleTone}
             activeNotes={ScaleConstants.NOTES}>
           </KeyboardOctave>

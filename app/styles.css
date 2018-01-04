@@ -13,8 +13,14 @@ ul.octave li{
 ul.octave li.disabled{
   background-color:  #cecece;
 }
-ul.octave li:hover:not(.disabled){
-  background: red;
+.scaleSelector ul.octave li.selected{
+  background: pink;
+}
+ul.octave li.white:hover:not(.disabled):not(.selected){
+  background: #efefef;
+}
+ul.octave li.black:hover:not(.disabled):not(.selected){
+  background: #555;
 }
 ul.octave li > * {
   vertical-align: bottom;
@@ -22,7 +28,7 @@ ul.octave li > * {
 li.white{
   width: 30px;
   height: 150px;
-  border: solid 1px #cecece;
+  border: solid 1px #bdbdbd;
   z-index:1;
 
 }
@@ -32,7 +38,7 @@ li.black{
   background: black;
   z-index:2;
   position:absolute;
-  border: solid 1px #cecece;
+  border: solid 1px #bdbdbd;
 }
 
 li.black.c{
@@ -75,4 +81,12 @@ input[type=range][orient=vertical]
 }
 .gradeProbability input[type=range]{
   height: 100px;
+}
+ul.scaleTypeSelector{
+  list-style-type: none;
+  padding: 0;
+}
+.scaleTypeContainer{
+  float: right;
+  padding: 20px;
 }
