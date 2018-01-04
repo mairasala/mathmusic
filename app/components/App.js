@@ -3,6 +3,7 @@ import {Keyboard} from './Keyboard';
 import {KeyboardOctave} from './KeyboardOctave';
 import {ScaleGradesProbability} from './ScaleGradesProbability';
 import {ScaleConstants} from '../utils/ScaleConstants';
+import {ScaleTypeSelector} from './ScaleTypeSelector';
 
 export class App extends React.Component {
   constructor(props){
@@ -51,13 +52,22 @@ export class App extends React.Component {
     const activeNotes = this.state.grades.map((grade) =>
       ScaleConstants.getNoteByGrade(grade, this.state.tone)
     );
+    const scaleTypes = Object.keys(ScaleConstants.SCALE_GRADES);
     return (
       <div>
-        <KeyboardOctave
-          octave='0'
-          onKeyPress={this.handleChangeScaleTone}
-          activeNotes={ScaleConstants.NOTES}>
-        </KeyboardOctave>
+        <div className="scaleSelector">
+          <KeyboardOctave
+            octave='0'
+            onKeyPress={this.handleChangeScaleTone}
+            activeNotes={ScaleConstants.NOTES}>
+          </KeyboardOctave>
+          <ScaleTypeSelector
+            scaleTypes={scaleTypes}
+            selected={this.state.scaleType}
+            scaleTone={this.state.tone}
+            onSelect={this.handleChangeScaleType}>
+          </ScaleTypeSelector>
+        </div>
         <ScaleGradesProbability
           tone={this.state.tone}
           scale={this.state.scaleType}
