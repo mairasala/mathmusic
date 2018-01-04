@@ -7,18 +7,21 @@ export class KeyboardKey extends React.Component {
     this.handleMouseUp = this.handleMouseUp.bind(this);
   }
   handleMouseDown(){
-    if(this.props.active){
+    if(this.props.active && this.props.onPress){
       this.props.onPress(`${this.props.note}-${this.props.octave}`);
     }
   }
   handleMouseUp(){
+    if(this.props.onUp){
       this.props.onUp(`${this.props.note}-${this.props.octave}`);
+    }
   }
   render(){
     const noteType =  this.isBlackNote() ? 'black' : 'white';
     const noteName = this.props.note.charAt(0).toLowerCase();
-    const activeName = this.props.active ? "" : 'disabled';
-    const noteClass = `${noteType} ${noteName} ${activeName}`;
+    const activeName = this.props.active ? '' : 'disabled';
+    const selectedName = this.props.selected ? 'selected' : '';
+    const noteClass = `${noteType} ${noteName} ${activeName} ${selectedName}`;
     return (
       <li key={this.props.index}
         className={noteClass}
