@@ -9,12 +9,15 @@ export class ScaleGradesProbability extends React.Component{
   }
 
   renderKeyProb(note, i){
-    const active = this.props.grades.includes(i);
+     const grade = this.props.grades.find(gr => gr.grade === i);
+    // const active = this.props.grades.includes(i);
     return <GradeProbability
       noteName={note}
       key={i}
       index={i}
-      active={active}
+      active={Boolean(grade)}
+      probability={grade ? grade.prob : 0}
+      onChange={this.props.onChange}
       onChangeGradeProb={this.props.onChangeGradeProb}>
     </GradeProbability>
   }

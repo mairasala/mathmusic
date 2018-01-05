@@ -11,13 +11,12 @@ export class ScaleTypeSelector extends React.Component {
     this.props.onSelect(evt.target.value);
   }
 
-  renderScaleType(type){
+  renderScaleType(type, idx){
     return (
-      <li className='scaleType'>
+      <li className='scaleType' key={idx}>
         <input type='radio'
           checked={type === this.props.selected}
           value={type}
-          key={type}
           onChange={this.handleChange} />
         <span>{type}</span>
       </li>

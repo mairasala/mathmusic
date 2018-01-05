@@ -13,6 +13,9 @@ ul.octave li{
 ul.octave li.disabled{
   background-color:  #cecece;
 }
+.scaleSelector{
+  float:left;
+}
 .scaleSelector ul.octave li.selected{
   background: pink;
 }
@@ -70,6 +73,9 @@ input[type=range][orient=vertical]
 }
 .keyProbabilityContainer{
   float: left;
+}
+.gradeProbability{
+  clear:both;
 }
 .gradeProbability .gradeName{
   color: #cecece;

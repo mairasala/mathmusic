@@ -3,11 +3,13 @@ import {Keyboard} from './Keyboard';
 import {KeyboardOctave} from './KeyboardOctave';
 import {ScaleGradesProbability} from './ScaleGradesProbability';
 import {ScaleConstants} from '../utils/ScaleConstants';
+import {ProbabilityConstants} from '../utils/ProbabilityConstants';
 import {ScaleTypeSelector} from './ScaleTypeSelector';
 
 export class App extends React.Component {
   constructor(props){
     super(props);
+    this.handleEnableGrade = this.handleEnableGrade.bind(this);
     this.handleChangeProb = this.handleChangeProb.bind(this);
     this.handleChangeScaleType = this.handleChangeScaleType.bind(this);
     this.handleChangeScaleTone = this.handleChangeScaleTone.bind(this);
@@ -15,25 +17,37 @@ export class App extends React.Component {
     this.state = {
       scaleType: 'MAJOR',
       tone: 'C',
-      grades: ScaleConstants.SCALE_GRADES['MAJOR']
+      grades:  ProbabilityConstants.mapGradesToProb(ScaleConstants.SCALE_GRADES['MAJOR'])
     };
   }
 
-  handleChangeProb(grade, enable){
-    const isPresent = this.state.grades.includes(grade);
+  handleEnableGrade(grade, enable){
+    const gradeIndx = this.state.grades.findIndex(gr => gr.grade === grade);
+    const isPresent = gradeIndx >= 0;
     const grades = this.state.grades.slice(0);
     if(!isPresent && enable){
-      grades.push(grade);
+      grades.push(ProbabilityConstants.mapGradeToProb(grade));
     } else if(isPresent && !enable) {
-      grades.splice(grades.indexOf(grade), 1);
+      grades.splice(gradeIndx, 1);
     }
     this.setState({
       grades: grades
     });
   }
 
+  handleChangeProb(grade, value){
+    const grades = this.state.grades.slice(0);
+    const gradeIndex = grades.findIndex(gr => gr.grade === grade);
+    if(gradeIndex >= 0){
+      grades.splice(gradeIndex, 1, {grade:grade, prob:value});
+      this.setState({
+        grades: grades
+      });
+    }
+  }
+
   handleChangeScaleType(type){
-    const grades = ScaleConstants.SCALE_GRADES[type];
+    const grades = ProbabilityConstants.mapGradesToProb(ScaleConstants.SCALE_GRADES[type]);
     if(this.state.scaleType !== type && grades){
       this.setState({
         scaleType: type,
@@ -49,10 +63,13 @@ export class App extends React.Component {
   }
 
   render() {
-    const activeNotes = this.state.grades.map((grade) =>
+    const activeNotes = this.state.grades
+                        .map(gr => gr.grade)
+                        .map((grade) =>
       ScaleConstants.getNoteByGrade(grade, this.state.tone)
     );
     const scaleTypes = Object.keys(ScaleConstants.SCALE_GRADES);
+
     return (
       <div>
         <div className="scaleSelector">
@@ -73,7 +90,8 @@ export class App extends React.Component {
           tone={this.state.tone}
           scale={this.state.scaleType}
           grades={this.state.grades}
-          onChangeGradeProb={this.handleChangeProb}>
+          onChange={this.handleChangeProb}
+          onChangeGradeProb={this.handleEnableGrade}>
         </ScaleGradesProbability>
         <Keyboard
           nOctaves='2'
