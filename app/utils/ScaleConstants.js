@@ -6,9 +6,9 @@ const ScaleConstants = {
     MAJOR_PENTATONIC:[0,2,4,7,9],
     MINOR_PENTATONIC:[0,3,5,7,10]
   },
+  CENTRAL_OCTAVE:4,
   REF_TONE: {
     note: 'A',
-    octave: 4,
     frequency: 440
   },
   getNoteByGrade(grade, tone){
@@ -25,6 +25,15 @@ const ScaleConstants = {
   },
   getGradeByNote(note){
     return this.NOTES.indexOf(note.toUpperCase());
+  },
+  getOctaves(nOctaves){
+    const lastOctave = this.CENTRAL_OCTAVE + Math.floor(nOctaves/2);
+    const firstOctave = lastOctave - nOctaves;
+
+    return {
+      first: firstOctave,
+      last: lastOctave
+    };
   }
 }
 

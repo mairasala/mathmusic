@@ -22,7 +22,7 @@ export class Keyboard extends React.Component {
 
     const lastOctave = centralOctave + Math.floor(nOctaves/2);
 
-    for(let i=lastOctave-nOctaves; i<lastOctave; i++){
+    for(let i=lastOctave-nOctaves; i < lastOctave; i++){
       octaves.push(this.renderOctave(i));
     }
     return(

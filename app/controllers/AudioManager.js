@@ -32,7 +32,7 @@ export class AudioManager {
 
     const dist = semitoneIndex - ScaleConstants.NOTES.indexOf(ScaleConstants.REF_TONE.notename);
     const freq = ScaleConstants.REF_TONE.frequency * Math.pow(Math.pow(2, dist), 1/12);
-    return freq * Math.pow(2, parseInt(octave) - ScaleConstants.REF_TONE.octave);
+    return freq * Math.pow(2, parseInt(octave) - ScaleConstants.CENTRAL_OCTAVE);
 
   }
 }

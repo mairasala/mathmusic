@@ -8,7 +8,7 @@ export class GradeProbability extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
   handleSlide(evt){
-    this.props.onChange(this.props.index, evt.target.value);
+    this.props.onChange(this.props.index, parseInt(evt.target.value));
   }
   handleChange(event){
     this.props.onChangeGradeProb(this.props.index, event.target.checked);
