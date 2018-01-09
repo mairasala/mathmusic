@@ -13,15 +13,22 @@ export class App extends React.Component {
     this.handleChangeProb = this.handleChangeProb.bind(this);
     this.handleChangeScaleType = this.handleChangeScaleType.bind(this);
     this.handleChangeScaleTone = this.handleChangeScaleTone.bind(this);
+    this.onChangePlaying = this.onChangePlaying.bind(this);
 
     this.state = {
       scaleType: 'MAJOR',
       nOctaves: 2,
       tone: 'C',
+      playing: false,
       grades:  ProbabilityConstants.mapGradesToProb(ScaleConstants.SCALE_GRADES['MAJOR'])
     };
   }
 
+  onChangePlaying(evt){
+    this.setState({
+      playing: evt.target.checked
+    });
+  }
 
   handleEnableGrade(grade, enable){
     const gradeIndx = this.state.grades.findIndex(gr => gr.grade === grade);
@@ -81,6 +88,10 @@ export class App extends React.Component {
 
     return (
       <div>
+        <input type='checkbox'
+          onChange={this.onChangePlaying}
+          className='player'>
+          </input>
         <div className="scaleSelector">
           <KeyboardOctave
             octave='0'
@@ -104,6 +115,7 @@ export class App extends React.Component {
         </ScaleGradesProbability>
         <Keyboard
           nOctaves={this.state.nOctaves}
+          playing={this.state.playing}
           activeNotes={activeNotes}>
         </Keyboard>
       </div>

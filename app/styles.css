@@ -62,6 +62,10 @@ li.black.g{
 li.black.a{
   left: 180px;
 }
+input[type=checkbox].player{
+  width:50px;
+  height: 50px;
+}
 
 input[type=range][orient=vertical]
 {

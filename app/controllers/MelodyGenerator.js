@@ -9,6 +9,7 @@ export class MelodyGenerator {
     this.playHandler = props.playHandler;
 
     this.createNote = this.createNote.bind(this);
+    this.playingNote = null;
   }
   setNotes(notes, scales){
     const updatedNotes = notes.filter((note)=> note.prob > 0);
@@ -25,8 +26,15 @@ export class MelodyGenerator {
     this.notes = notes;
   }
   start(){
-    // this.timer = setInterval(seminimInterval, this.createNote);
     this.createNote();
+  }
+  stop(){
+    clearTimeout(this.timer);
+    this.timer = null;
+    this.playHandler({
+      type:'stop',
+      note: this.playingNote
+    });
   }
   createNote(time){
     const seed = Math.random()*this.seed;
@@ -39,16 +47,18 @@ export class MelodyGenerator {
       }
     );
     const scale = Math.floor(Math.random() * (this.scales.last - this.scales.first + 1)) + this.scales.first;
-    this.playHandler({
-      type:'play',
+    this.playingNote = {
       note: note.note,
       scale: scale
+    };
+    this.playHandler({
+      type:'play',
+      note: this.playingNote
     });
     this.timer = setTimeout(int => {
       this.playHandler({
         type:'stop',
-        note: note.note,
-        scale: scale
+        note: this.playingNote
       });
       this.timer = null;
       this.createNote(int);

@@ -20,11 +20,17 @@ export class Keyboard extends React.Component {
       playHandler: this.noteIn
     });
     this.melodyGenerator.setNotes(this.props.activeNotes, this.props.nOctaves);
-    this.melodyGenerator.start();
   }
   componentDidUpdate(lastProps, lastState) {
     if(lastProps.nOctaves !== this.props.nOctaves || lastProps.activeNotes !== this.props.activeNotes){
       this.melodyGenerator.setNotes(this.props.activeNotes, this.props.nOctaves);
+    }
+    if(lastProps.playing !== this.props.playing){
+      if(this.props.playing){
+        this.melodyGenerator.start();
+      } else {
+        this.melodyGenerator.stop();
+      }
     }
   }
   onKeyPress(note){
@@ -34,7 +40,7 @@ export class Keyboard extends React.Component {
     this.audioManager.stopNote(note);
   }
   noteIn(evt){
-    const noteName = `${evt.note}-${evt.scale}`;
+    const noteName = `${evt.note.note}-${evt.note.scale}`;
     if(evt.type === 'stop'){
       this.setState({
         selectedNote: null
@@ -42,10 +48,7 @@ export class Keyboard extends React.Component {
       this.onKeyUp(noteName);
     } else if(evt.type === 'play'){
       this.setState({
-        selectedNote: {
-          note: evt.note,
-          scale: evt.scale
-        }
+        selectedNote: evt.note
       });
       this.onKeyPress(noteName);
     }
