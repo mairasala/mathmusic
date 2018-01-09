@@ -78,10 +78,10 @@ export class Keyboard extends React.Component {
       <KeyboardOctave
         key={i}
         octave={i+1}
-        onKeyPress={this.props.onKeyPress}
+        onKeyPress={this.onKeyPress}
         selected = {selected}
         activeNotes={this.props.activeNotes}
-        onKeyUp={this.props.onKeyUp}>
+        onKeyUp={this.onKeyUp}>
       </KeyboardOctave>);
   }
 }
