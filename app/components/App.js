@@ -5,7 +5,6 @@ import {ScaleGradesProbability} from './ScaleGradesProbability';
 import {ScaleConstants} from '../utils/ScaleConstants';
 import {ProbabilityConstants} from '../utils/ProbabilityConstants';
 import {ScaleTypeSelector} from './ScaleTypeSelector';
-// import {MelodyGenerator} from '../controllers/MelodyGenerator';
 
 export class App extends React.Component {
   constructor(props){
@@ -14,13 +13,6 @@ export class App extends React.Component {
     this.handleChangeProb = this.handleChangeProb.bind(this);
     this.handleChangeScaleType = this.handleChangeScaleType.bind(this);
     this.handleChangeScaleTone = this.handleChangeScaleTone.bind(this);
-    // this.handlePlayRandom = this.handlePlayRandom.bind(this);
-    // this.handlePlayNote = this.handlePlayNote.bind(this);
-    // this.handleStopNote = this.handleStopNote.bind(this);
-
-    // this.melodyGenerator = new MelodyGenerator({
-    //   playHandler: this.handlePlayRandom,
-    // });
 
     this.state = {
       scaleType: 'MAJOR',
@@ -28,12 +20,8 @@ export class App extends React.Component {
       tone: 'C',
       grades:  ProbabilityConstants.mapGradesToProb(ScaleConstants.SCALE_GRADES['MAJOR'])
     };
-    // this.updateAudiomanager();
-    // this.melodyGenerator.start();
   }
 
-  // handlePlayRandom(evt){
-  // }
 
   handleEnableGrade(grade, enable){
     const gradeIndx = this.state.grades.findIndex(gr => gr.grade === grade);
@@ -57,7 +45,6 @@ export class App extends React.Component {
       this.setState({
         grades: grades
       });
-      // this.updateAudiomanager();
     }
   }
 
@@ -76,18 +63,7 @@ export class App extends React.Component {
     if(this.state.tone !== clearTone){
       this.setState({tone: clearTone});
     }
-    // this.updateAudiomanager();
   }
-  // updateAudiomanager(){
-  //   const notesProb = this.state.grades.map( gr => {
-  //       return {
-  //         note: ScaleConstants.getNoteByGrade(gr.grade, this.state.tone),
-  //         prob: gr.prob
-  //       }
-  //     }
-  //   );
-  //   this.melodyGenerator.setNotes(notesProb, this.state.nOctaves);
-  // }
 
   render() {
     const activeNotes = this.state.grades

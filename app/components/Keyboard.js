@@ -11,6 +11,10 @@ export class Keyboard extends React.Component {
     this.onKeyUp = this.onKeyUp.bind(this);
     this.noteIn = this.noteIn.bind(this);
 
+    this.state = {
+      selectedNote: null
+    }
+
     this.audioManager = new AudioManager();
     this.melodyGenerator = new MelodyGenerator({
       playHandler: this.noteIn
@@ -30,10 +34,20 @@ export class Keyboard extends React.Component {
     this.audioManager.stopNote(note);
   }
   noteIn(evt){
+    const noteName = `${evt.note}-${evt.scale}`;
     if(evt.type === 'stop'){
-      this.onKeyUp(evt.note);
+      this.setState({
+        selectedNote: null
+      });
+      this.onKeyUp(noteName);
     } else if(evt.type === 'play'){
-      this.onKeyPress(evt.note);
+      this.setState({
+        selectedNote: {
+          note: evt.note,
+          scale: evt.scale
+        }
+      });
+      this.onKeyPress(noteName);
     }
   }
   render() {
@@ -50,11 +64,19 @@ export class Keyboard extends React.Component {
     );
   }
   renderOctave(i){
+    let selected = null;
+    if(this.state.selectedNote){
+      if(this.state.selectedNote.scale === i){
+        selected = this.state.selectedNote.note;
+      }
+    }
+
     return (
       <KeyboardOctave
         key={i}
         octave={i+1}
         onKeyPress={this.props.onKeyPress}
+        selected = {selected}
         activeNotes={this.props.activeNotes}
         onKeyUp={this.props.onKeyUp}>
       </KeyboardOctave>);

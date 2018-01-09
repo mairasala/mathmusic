@@ -16,7 +16,7 @@ ul.octave li.disabled{
 .scaleSelector{
   float:left;
 }
-.scaleSelector ul.octave li.selected{
+ul.octave li.selected{
   background: pink;
 }
 ul.octave li.white:hover:not(.disabled):not(.selected){

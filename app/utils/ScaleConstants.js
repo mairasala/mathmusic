@@ -27,8 +27,8 @@ const ScaleConstants = {
     return this.NOTES.indexOf(note.toUpperCase());
   },
   getOctaves(nOctaves){
-    const lastOctave = this.CENTRAL_OCTAVE + Math.floor(nOctaves/2) - 1;
-    const firstOctave = lastOctave - nOctaves;
+    const lastOctave = this.CENTRAL_OCTAVE + Math.floor(nOctaves/2) ;
+    const firstOctave = lastOctave - nOctaves + 1;
 
     return {
       first: firstOctave,
