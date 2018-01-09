@@ -5,7 +5,7 @@ import {ScaleGradesProbability} from './ScaleGradesProbability';
 import {ScaleConstants} from '../utils/ScaleConstants';
 import {ProbabilityConstants} from '../utils/ProbabilityConstants';
 import {ScaleTypeSelector} from './ScaleTypeSelector';
-import {MelodyGenerator} from '../controllers/MelodyGenerator';
+// import {MelodyGenerator} from '../controllers/MelodyGenerator';
 
 export class App extends React.Component {
   constructor(props){
@@ -14,11 +14,13 @@ export class App extends React.Component {
     this.handleChangeProb = this.handleChangeProb.bind(this);
     this.handleChangeScaleType = this.handleChangeScaleType.bind(this);
     this.handleChangeScaleTone = this.handleChangeScaleTone.bind(this);
-    this.handlePlayRandom = this.handlePlayRandom.bind(this);
+    // this.handlePlayRandom = this.handlePlayRandom.bind(this);
+    // this.handlePlayNote = this.handlePlayNote.bind(this);
+    // this.handleStopNote = this.handleStopNote.bind(this);
 
-    this.melodyGenerator = new MelodyGenerator({
-      playHandler: this.handlePlayRandom,
-    });
+    // this.melodyGenerator = new MelodyGenerator({
+    //   playHandler: this.handlePlayRandom,
+    // });
 
     this.state = {
       scaleType: 'MAJOR',
@@ -26,12 +28,12 @@ export class App extends React.Component {
       tone: 'C',
       grades:  ProbabilityConstants.mapGradesToProb(ScaleConstants.SCALE_GRADES['MAJOR'])
     };
-    this.updateAudiomanager();
-    this.melodyGenerator.start();
+    // this.updateAudiomanager();
+    // this.melodyGenerator.start();
   }
 
-  handlePlayRandom(evt){
-  }
+  // handlePlayRandom(evt){
+  // }
 
   handleEnableGrade(grade, enable){
     const gradeIndx = this.state.grades.findIndex(gr => gr.grade === grade);
@@ -55,7 +57,7 @@ export class App extends React.Component {
       this.setState({
         grades: grades
       });
-      this.updateAudiomanager();
+      // this.updateAudiomanager();
     }
   }
 
@@ -66,7 +68,7 @@ export class App extends React.Component {
         scaleType: type,
         grades: grades
       });
-      this.updateAudiomanager();
+      // this.updateAudiomanager();
     }
   }
   handleChangeScaleTone(tone){
@@ -74,25 +76,31 @@ export class App extends React.Component {
     if(this.state.tone !== clearTone){
       this.setState({tone: clearTone});
     }
-    this.updateAudiomanager();
+    // this.updateAudiomanager();
   }
-  updateAudiomanager(){
-    const notesProb = this.state.grades.map( gr => {
-        return {
-          note: ScaleConstants.getNoteByGrade(gr.grade, this.state.tone),
-          prob: gr.prob
-        }
-      }
-    );
-    this.melodyGenerator.setNotes(notesProb, this.state.nOctaves);
-  }
+  // updateAudiomanager(){
+  //   const notesProb = this.state.grades.map( gr => {
+  //       return {
+  //         note: ScaleConstants.getNoteByGrade(gr.grade, this.state.tone),
+  //         prob: gr.prob
+  //       }
+  //     }
+  //   );
+  //   this.melodyGenerator.setNotes(notesProb, this.state.nOctaves);
+  // }
 
   render() {
     const activeNotes = this.state.grades
-                        .map(gr => gr.grade)
-                        .map((grade) =>
-      ScaleConstants.getNoteByGrade(grade, this.state.tone)
-    );
+                        .map((gr) => {
+                          return {
+                            note: ScaleConstants.getNoteByGrade(gr.grade, this.state.tone),
+                            prob: gr.prob
+                          };
+                        }
+                      );
+    const allNotes = ScaleConstants.NOTES.map(n => {
+      return { note: n };
+    });
     const scaleTypes = Object.keys(ScaleConstants.SCALE_GRADES);
 
     return (
@@ -102,7 +110,7 @@ export class App extends React.Component {
             octave='0'
             selected={this.state.tone}
             onKeyPress={this.handleChangeScaleTone}
-            activeNotes={ScaleConstants.NOTES}>
+            activeNotes={allNotes}>
           </KeyboardOctave>
           <ScaleTypeSelector
             scaleTypes={scaleTypes}

@@ -40,15 +40,13 @@ export class MelodyGenerator {
     );
     const scale = Math.floor(Math.random() * (this.scales.last - this.scales.first + 1)) + this.scales.first;
     this.playHandler({
-      evt:'play',
-      note: note.note,
-      scale: scale
+      type:'play',
+      note: `${note.note}-${scale}`
     });
     this.timer = setTimeout(int => {
       this.playHandler({
-        evt:'stop',
-        note: note.note,
-        scale: scale
+        type:'stop',
+        note: `${note.note}-${scale}`
       });
       this.timer = null;
       this.createNote(int);

@@ -13,13 +13,14 @@ export class KeyboardOctave extends React.Component {
   }
 
   renderKey(note, index){
+    const active = Boolean(this.props.activeNotes.find(n => n.note === note));
     return (
        <KeyboardKey
          note={note}
          selected={this.props.selected === note}
          key={index}
          octave={this.props.octave}
-         active={this.props.activeNotes.includes(note)}
+         active={active}
          onPress={this.handleOnKeyPress}
          onUp={this.props.onKeyUp}>
       </KeyboardKey>
